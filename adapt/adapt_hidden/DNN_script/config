@@ -1,0 +1,116 @@
+[data]
+train_input = /tmp/zhaoyi/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/TRAIN/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu4/data/DNN_DATA_ALL/TRAIN/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu6/data/DNN_DATA_ALL/TRAIN/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu7/data/DNN_DATA_ALL/TRAIN/INPUT
+
+train_target = /tmp/zhaoyi/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/TRAIN/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu4/data/DNN_DATA_ALL/TRAIN/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu6/data/DNN_DATA_ALL/TRAIN/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu7/data/DNN_DATA_ALL/TRAIN/TARGET
+
+val_input = /tmp/zhaoyi/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/VAL/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu4/data/DNN_DATA_ALL/VAL/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu6/data/DNN_DATA_ALL/VAL/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu7/data/DNN_DATA_ALL/VAL/INPUT 
+
+val_target = /tmp/zhaoyi/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/VAL/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu4/data/DNN_DATA_ALL/VAL/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu6/data/DNN_DATA_ALL/VAL/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu7/data/DNN_DATA_ALL/VAL/TARGET
+
+
+
+mean_file = /home/zhaoyi/mywork/tts/speaker_adaptation_cmu/SI/average
+
+
+
+model_prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/DNN/0931_m
+
+
+format = kaldi
+xdim = 309
+ydim = 202
+
+
+[arch]
+#DNN layer num
+num_ff_layer = 2 
+ 
+#nodes of each DNN layer
+num_hidden_ff = 256 
+
+#LSTM layer num
+num_lstm_layer = 2 
+
+#nodes of each run layer
+num_hidden_lstm =256
+
+num_hidden=256
+num_hidden_proj=0
+
+[train]
+
+train = True
+
+batch_size = 200
+
+num_epoch = 300
+
+# used only if method is truncated-bptt
+truncate_len = 600
+
+# gpu0, gpu1
+context = gpu0
+
+# bucketing, truncated-bptt
+method = truncated-bptt
+
+# checkpoint prefix
+prefix = hybrid
+
+learning_rate = 0.0001
+decay_factor = 10
+decay_lower_bound = 1e-6
+dropout = 0.2
+
+optimizer = speechSGD
+momentum = 0.9
+
+# set to 0 to disable gradient clipping
+clip_gradient = 1
+
+# uniform, normal, xavier
+initializer = Uniform
+init_scale = 0.05
+weight_decay = 0.008
+
+# show progress every how many batches
+show_every = 100
+
+[test]
+test_input = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu1/data/DNN_DATA_ALL/TEST/INPUT
+test_target = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu1/data/DNN_DATA_ALL/TEST/TARGET
+test = true
+load_epoch_num = 195
+out_file = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/gen/DNN/SI/cmu1
+test_prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/DNN/0931_lr1
+
+[adapt]
+adapt = true
+load_adapt_num = 212
+adapt_prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/DNN_1234/fixed_2
+load_prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/DNN/0931_lr1
+
+[adapt_sc]
+
+adapt_sc = true
+
+load_prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/DNN_1234/fixed_2
+load_adapt_num = 100
+
+
+sc_prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/DNN_1234/sc
+num_epochs = 200
+
+
+train_input = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu1/data/DNN_DATA_ALL/TRAIN/INPUT
+train_target = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu1/data/DNN_DATA_ALL/TRAIN/TARGET
+val_input = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu1/data/DNN_DATA_ALL/VAL/INPUT
+val_target =/home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu1/data/DNN_DATA_ALL/VAL/TARGET
+
+test_input = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu1/data/DNN_DATA_ALL/TEST/INPUT
+
+test_target = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu1/data/DNN_DATA_ALL/TEST/TARGET
+out_file = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/gen/DNN/SD_2/cmu1_10
+
+train_num = 10
+val_num = 50

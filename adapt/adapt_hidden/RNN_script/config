@@ -1,0 +1,74 @@
+[data]
+
+train_input = /tmp/zhaoyi/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/TRAIN/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu4/data/DNN_DATA_ALL/TRAIN/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu6/data/DNN_DATA_ALL/TRAIN/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu7/data/DNN_DATA_ALL/TRAIN/INPUT
+
+train_target = /tmp/zhaoyi/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/TRAIN/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu4/data/DNN_DATA_ALL/TRAIN/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu6/data/DNN_DATA_ALL/TRAIN/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu7/data/DNN_DATA_ALL/TRAIN/TARGET
+
+val_input = /tmp/zhaoyi/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/VAL/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu4/data/DNN_DATA_ALL/VAL/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu6/data/DNN_DATA_ALL/VAL/INPUT,/tmp/zhaoyi/CMU_STRAIGHT2/cmu7/data/DNN_DATA_ALL/VAL/INPUT 
+
+val_target = /tmp/zhaoyi/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/VAL/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu4/data/DNN_DATA_ALL/VAL/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu6/data/DNN_DATA_ALL/VAL/TARGET,/tmp/zhaoyi/CMU_STRAIGHT2/cmu7/data/DNN_DATA_ALL/VAL/TARGET
+
+
+xdim = 309
+ydim = 202
+
+[arch]
+#DNN layer num
+num_ff_layer = 2 
+ 
+#nodes of each DNN layer
+num_hidden_ff = 256
+
+#LSTM layer num
+num_lstm_layer = 4
+
+#nodes of each run layer
+num_hidden_lstm =256
+
+[train]
+
+train = True
+
+batch_size = 20
+
+num_epoch = 300
+
+# used only if method is truncated-bptt
+truncate_len = 600
+
+# gpu0, gpu1
+context = gpu0
+
+# bucketing, truncated-bptt
+method = truncated-bptt
+
+# checkpoint prefix
+model_prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/RNN/SI/0904-4
+prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/RNN/SI/0904-4h
+
+learning_rate = 1
+decay_factor = 2
+decay_lower_bound = 1e-7
+dropout = 0.2
+
+optimizer = speechSGD
+momentum = 0.5
+
+# set to 0 to disable gradient clipping
+clip_gradient = 1
+
+# uniform, normal, xavier
+initializer = Uniform
+init_scale = 0.005
+weight_decay = 0.005
+
+# show progress every how many batches
+show_every = 100
+
+[test]
+test_input = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/TEST/INPUT
+test_target = /home/zhaoyi/mywork/tts/HTStry/Demo/CMU_STRAIGHT2/cmu2/data/DNN_DATA_ALL/TEST/TARGET
+test = true
+load_epoch_num = 100
+out_file = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/gen/DNN/SI/cmu2
+test_prefix = /home/zhaoyi/mywork/tts/speaker_adaptation_hidden/scripts/autosave/RNN/SI/0904-3
